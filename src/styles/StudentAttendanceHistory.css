@@ -1,0 +1,78 @@
+/* StudentAttendanceHistory.css */
+.attendance-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.attendance-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background-color: #4f46e5;
+  color: white;
+}
+
+tr:hover {
+  background-color: #e0e7ff;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  font-weight: 600;
+}
+
+/* Responsive for mobile */
+@media (max-width: 700px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 0.95rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    flex-basis: 50%;
+  }
+}

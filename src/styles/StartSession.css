@@ -1,0 +1,46 @@
+.session-page{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:40px;
+
+}
+
+.session-page input{
+
+padding:10px;
+margin:10px;
+width:300px;
+
+}
+
+.session-page button{
+
+padding:12px 20px;
+background:#047857;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+
+}
+
+.qr-container{
+
+margin-top:30px;
+padding:20px;
+background:white;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+
+}
+
+@media(max-width:600px){
+
+.session-page input{
+
+width:90%;
+
+}
+
+}
