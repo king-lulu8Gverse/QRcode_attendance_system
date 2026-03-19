@@ -1,36 +1,36 @@
 import { useEffect, useState } from "react";
-import { getAttendance } from "../../services/api";
-import "../styles/StudentAttendanceHistory.css"; // CSS file we made
+import { getStudentAttendance } from "../../services/api";
+import "../styles/StudentAttendanceHistory.css";
 import React from "react";
 
-function StudentAttendanceHistory() {
-  const [attendance, setAttendance] = useState([]);
+function StudentAttendanceHistory({ token }) {
+  const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fetchAttendance = async () => {
+    const fetchHistory = async () => {
       setLoading(true);
       setError("");
       setMessage("");
 
       try {
-        const res = await getAttendance("student"); // token auto-attached
-        if (res.data?.length) {
-          setAttendance(res.data);
+        const data = await getStudentAttendance(token);
+        if (data.length) {
+          setSessions(data);
         } else {
           setMessage("No attendance records yet.");
         }
       } catch (err) {
-        setError(err?.message || "Failed to fetch attendance");
+        setError(err?.message || "Failed to fetch attendance history");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAttendance();
-  }, []);
+    fetchHistory();
+  }, [token]);
 
   if (loading) return <p className="message">Loading your attendance...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -40,25 +40,22 @@ function StudentAttendanceHistory() {
     <div className="attendance-container">
       <h2>Your Attendance History</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Course</th>
-            <th>Date & Time</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {attendance.map((a) => (
-            <tr key={a.id}>
-              <td data-label="Course">{a.course_name}</td>
-              <td data-label="Date & Time">
-                {new Date(a.created_at).toLocaleString()}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {sessions.map((session) => (
+        <div key={session._id} className="session-block">
+          <h3>
+            {session.course.name} -{" "}
+            {new Date(session.date).toLocaleDateString()}
+          </h3>
+          <p>
+            Status:{" "}
+            {session.attended ? (
+              <span style={{ color: "green" }}>Present ✅</span>
+            ) : (
+              <span style={{ color: "red" }}>Absent ❌</span>
+            )}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }

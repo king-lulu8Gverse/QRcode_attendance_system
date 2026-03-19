@@ -10,7 +10,6 @@ import StartSession from "./pages/lecturer/StartSession";
 import AttendanceList from "./pages/lecturer/AttendanceList";
 import ScanQR from "./pages/ScanQR";
 import StudentAttendanceHistory from "./pages/StudentAttendanceHistory";
-
 function App() {
   return (
     <Routes>
@@ -27,7 +26,7 @@ function App() {
       >
         <Route path="create-course" element={<CreateCourse />} />
         <Route path="start-session" element={<StartSession />} />
-        <Route path="attendance-list/:sessionId" element={<AttendanceList />} />
+        <Route path="attendance-list" element={<AttendanceList />} />
       </Route>
       <Route
         path="/student"

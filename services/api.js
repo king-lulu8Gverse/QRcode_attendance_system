@@ -91,10 +91,34 @@ export const markAttendance = async (sessionToken, token) => {
   }
 };
 /* ---------------- VIEW ATTENDANCE ---------------- */
-
+//fetch the attendance for a specific session
 export const getAttendance = async (session_id, token) => {
   try {
     const res = await API.get(`/attendance/${session_id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || err;
+  }
+};
+
+//Get the attendance history for lecturer
+
+export const getLecturerAttendance = async (token) => {
+  try {
+    const res = await API.get(`/attendance/lecturer`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || err;
+  }
+};
+// Fetch all sessions attended by the student
+export const getStudentAttendance = async (token) => {
+  try {
+    const res = await API.get("/attendance/student", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
