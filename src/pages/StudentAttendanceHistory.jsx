@@ -17,6 +17,7 @@ function StudentAttendanceHistory({ token }) {
 
       try {
         const data = await getStudentAttendance(token);
+
         if (data.length) {
           setSessions(data);
         } else {
@@ -41,18 +42,21 @@ function StudentAttendanceHistory({ token }) {
       <h2>Your Attendance History</h2>
 
       {sessions.map((session) => (
-        <div key={session._id} className="session-block">
+        <div key={session.id} className="session-block">
           <h3>
-            {session.course.name} -{" "}
+            {session.course_name} -{" "}
             {new Date(session.date).toLocaleDateString()}
           </h3>
+
           <p>
-            Status:{" "}
-            {session.attended ? (
-              <span style={{ color: "green" }}>Present ✅</span>
-            ) : (
-              <span style={{ color: "red" }}>Absent ❌</span>
-            )}
+            Time:{" "}
+            {session.start_time
+              ? new Date(session.start_time).toLocaleTimeString()
+              : "N/A"}
+          </p>
+
+          <p>
+            Status: <span style={{ color: "green" }}>Present ✅</span>
           </p>
         </div>
       ))}
