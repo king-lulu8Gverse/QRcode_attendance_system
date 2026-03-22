@@ -1,62 +1,130 @@
-.register-container {
-  min-height: 80vh;
+
+.navbar {
+  background-color: rgb(30, 30, 60); /* dark bluish-purple */
+  color: #f4f4f6;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 10px 10px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  background: #f5f7fb;
-  padding: 20px;
 }
 
-.register-container h2 {
-  font-size: 28px;
-  color: #1e293b;
-  margin-bottom: 25px;
+/* ==============================
+   Brand / Logo
+============================== */
+.brand {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffe600; /* bright yellow accent */
+  font-family: 'Montserrat', sans-serif;
 }
 
-.register-container form {
-  width: 400px;
+/* ==============================
+   Desktop Links
+============================== */
+.nav-links {
   display: flex;
+  gap: 2rem;
+  list-style: none;
+  font-size: 1.1rem;
+}
+
+.nav-links li a {
+  color: #f4f4f6;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffe600;
+}
+
+/* ==============================
+   Hamburger Button
+============================== */
+.hamburger {
+  display: none;
   flex-direction: column;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.register-container input,
-.register-container select {
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
-}
-
-.register-container input:focus,
-.register-container select:focus {
-  outline: none;
-  border-color: #2563eb;
-}
-
-.register-container button {
-  padding: 12px;
-  border: none;
-  background: #2563eb;
-  color: white;
-  font-size: 16px;
-  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  gap: 5px;
 }
 
-.register-container button:hover {
-  background: #1d4ed8;
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: #ffe600;
+  transition: all 0.3s ease;
 }
 
-@media(max-width:600px){
-  .register-container form {
-    width: 100%;
-    padding: 20px;
+.rotate1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.rotate2 {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.fade {
+  opacity: 0;
+}
+
+/* ==============================
+   Mobile Styles
+============================== */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 1rem;
+    left: 1rem;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    background: transparent; /* remove big bg */
+    gap: 0.5rem;
+    z-index: 100;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  /* Each link as its own island */
+  .nav-links li a {
+    display: block;
+    padding: 0.8rem 1rem;
+    background-color: rgba(255, 255, 255, 0.15); /* island bg */
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  /* Hover effect for islands */
+  .nav-links li a:hover {
+    background-color: #ffe600;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }

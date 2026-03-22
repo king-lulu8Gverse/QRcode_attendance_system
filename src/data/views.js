@@ -4,36 +4,15 @@ export const pages = [
     Path: "/",
   },
   {
-    name: "Profile",
-    path: "/Profile",
-  },
-  {
-    name: "Settings",
-    path: "/Settins",
-  },
-  {
     name: "Login",
-    path: "/Login",
-  },
-  {
-    name: "Lecturer",
-    path: "/LecturerDashboard",
-  },
-  {
-    name: "Student",
-    path: "/StudentDashboard",
+    path: "/login",
   },
   {
     name: "Register",
-    path: "/Register",
+    path: "/register",
   },
   {
-    name: "ScanQR",
-    path: "/ScanQR",
+    name: "about",
+    path: "/about",
   },
-  {
-    name: "StartSession",
-    path: "/StartSession",
-  }
-
 ];
