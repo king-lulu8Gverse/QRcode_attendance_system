@@ -13,7 +13,7 @@ import {
   FaCheck,
   FaSmile,
 } from "react-icons/fa";
-
+import Footer from "../components/Footer";
 const carouselImages = [
   "/imagefour.jpg",
   "/imageone.jpg",
@@ -141,10 +141,7 @@ function Home() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="footer">
-          <p>© 2026 Digital Attendance System</p>
-        </footer>
+        <Footer />
       </main>
     </>
   );
