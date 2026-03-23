@@ -12,7 +12,7 @@ function Navbar() {
         
         <div className="brand">TechTendance</div>
 
-        {/* Desktop Links */}
+        
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
           {pages.map((page) => (
             <li key={page.name}>
@@ -23,7 +23,7 @@ function Navbar() {
           ))}
         </ul>
 
-        {/* Hamburger */}
+   
         <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
           <div className={`line ${isOpen ? "rotate1" : ""}`}></div>
           <div className={`line ${isOpen ? "fade" : ""}`}></div>
