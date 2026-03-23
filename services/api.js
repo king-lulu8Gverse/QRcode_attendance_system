@@ -126,4 +126,13 @@ export const getStudentAttendance = async (token) => {
     throw err.response?.data || err;
   }
 };
-
+export const getDashboardStats = async (token) => {
+  try {
+    const res = await API.get("/dashboard/stats", { 
+      headers: { Authorization: `Bearer ${token}` },  
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || err;
+  }
+};     
