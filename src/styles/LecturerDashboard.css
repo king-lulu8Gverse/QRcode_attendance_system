@@ -1,35 +1,71 @@
-.lecturer-dashboard{
-padding:40px;
+* { box-sizing: border-box; }
+
+.lecturer-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  font-family: "Segoe UI", sans-serif;
 }
 
-.dashboard-cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-top:30px;
+.dashboard-sidebar {
+  width: 220px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.card{
-padding:40px;
-background:#047857;
-color:white;
-border-radius:10px;
-text-align:center;
-cursor:pointer;
+.dashboard-sidebar h2 { text-align:center; color:#00bfff; }
+.dashboard-sidebar nav a {
+  display:flex; align-items:center; gap:10px;
+  padding:12px; border-radius:12px; text-decoration:none; color:white;
+  transition:0.3s;
+}
+.dashboard-sidebar nav a:hover { background: rgba(0,191,255,0.2); transform: translateX(5px); }
+
+.dashboard-main { flex:1; padding:25px 35px; overflow-y:auto; }
+.dashboard-header h1 { margin-bottom:25px; color:#00bfff; }
+
+/* FUTURISTIC CARDS */
+.dashboard-cards, .action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-bottom:40px;
 }
 
-@media(max-width:900px){
-
-.dashboard-cards{
-grid-template-columns:repeat(2,1fr);
+.card.futuristic {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding:25px 20px;
+  text-align:center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.card.futuristic:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0,191,255,0.5);
 }
 
-@media(max-width:600px){
+.card-icon { font-size:2.5rem; margin-bottom:10px; color:#00bfff; }
 
-.dashboard-cards{
-grid-template-columns:1fr;
-}
+/* ACTION CARDS */
+.action-card h3 { margin-bottom:8px; color:#00bfff; }
+.action-card p { font-size:0.85rem; color:#ccc; }
 
+/* CHARTS */
+.charts-section { margin-bottom:40px; }
+.chart-placeholder { height:250px; background: rgba(255,255,255,0.05); border-radius:15px; display:flex; align-items:center; justify-content:center; font-style:italic; color:#aaa; }
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .lecturer-dashboard { flex-direction: column; }
+  .dashboard-sidebar { width:100%; flex-direction:row; overflow-x:auto; }
+  .dashboard-main { padding:15px 20px; }
+  .dashboard-cards, .action-cards { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 }

@@ -126,3 +126,4 @@ export const getStudentAttendance = async (token) => {
     throw err.response?.data || err;
   }
 };
+
