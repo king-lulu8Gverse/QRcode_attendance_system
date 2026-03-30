@@ -61,6 +61,19 @@ tr:hover {
   background-color: #e0e7ff;
 }
 
+.session-block {
+  background: rgb(48, 35, 35);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.student-count {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #8e9ae8;
+}
 /* Responsive for mobile */
 @media (max-width: 700px) {
   table, thead, tbody, th, td, tr {

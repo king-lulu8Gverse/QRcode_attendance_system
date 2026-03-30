@@ -11,12 +11,12 @@ function AttendanceList({ token }) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch courses & lecturer attendance on load
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError("");
       setMessage("");
+
       try {
         const [coursesRes, sessionsRes] = await Promise.all([
           getCourses(token),
@@ -30,17 +30,20 @@ function AttendanceList({ token }) {
         setSessions(allSessions);
         setFilteredSessions(allSessions);
 
-        if (!allSessions.length) setMessage("No attendance history found.");
+        if (!allSessions.length) {
+          setMessage("No attendance history found.");
+        }
+
       } catch (err) {
         setError(err?.message || "Failed to fetch data.");
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, [token]);
 
-  // Handle course filtering
   const handleCourseChange = (e) => {
     const courseId = e.target.value;
     setSelectedCourse(courseId);
@@ -48,7 +51,9 @@ function AttendanceList({ token }) {
     if (!courseId) {
       setFilteredSessions(sessions);
     } else {
-      const filtered = sessions.filter((s) => s.course.id === String(courseId));
+      const filtered = sessions.filter(
+        (s) => s.course.id == courseId
+      );
       setFilteredSessions(filtered);
     }
   };
@@ -57,7 +62,6 @@ function AttendanceList({ token }) {
     <div className="attendance-container">
       <h2>Attendance History</h2>
 
-      {/* Course selector */}
       <select value={selectedCourse} onChange={handleCourseChange}>
         <option value="">All Courses/Sessions</option>
         {courses.map((c) => (
@@ -67,14 +71,13 @@ function AttendanceList({ token }) {
         ))}
       </select>
 
-      {/* Messages */}
       {loading && <p className="message">Loading attendance...</p>}
       {error && <p className="error">{error}</p>}
+
       {!loading && !error && filteredSessions.length === 0 && (
         <p className="message">{message || "No sessions found."}</p>
       )}
 
-      {/* Sessions & attendance table */}
       {filteredSessions.length > 0 &&
         filteredSessions.map((session) => (
           <div key={session._id || session.id} className="session-block">
@@ -82,6 +85,10 @@ function AttendanceList({ token }) {
               {session.course.name} -{" "}
               {new Date(session.date).toLocaleDateString()}
             </h3>
+
+            <p className="student-count">
+              Students Present: {session.attendees.length}
+            </p>
 
             {session.attendees.length > 0 ? (
               <table>
@@ -93,6 +100,7 @@ function AttendanceList({ token }) {
                     <th>Faculty</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {session.attendees.map((att, index) => {
                     const student = att.student || att;

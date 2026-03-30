@@ -3,9 +3,10 @@
   max-width: 900px;
   margin: 30px auto;
   padding: 20px;
-  background-color: #f9fafb;
+  background-color: #004e9c;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  color: white;
 }
 
 .attendance-container h2 {
