@@ -9,3 +9,17 @@
 
 
 
+.install-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.install-btn:hover {
+  background: #1d4ed8;
+}

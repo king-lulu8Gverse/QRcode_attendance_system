@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { FaBook, FaPlayCircle, FaListAlt, FaCog, FaChartBar, FaUserGraduate } from "react-icons/fa";
+import {
+  FaBook,
+  FaPlayCircle,
+  FaListAlt,
+  FaCog,
+  FaChartBar,
+  FaUserGraduate,
+} from "react-icons/fa";
 import "../styles/LecturerDashboard.css";
 import { getDashboardStats } from "../../services/api"; // API call for stats
-
+import InstallButton from "../components/InstallButton";
 function LecturerDashboard() {
   const [stats, setStats] = useState({
     totalCourses: 0,
     ongoingSessions: 0,
     totalStudents: 0,
-    avgAttendance: 0
+    avgAttendance: 0,
   });
 
   useEffect(() => {
@@ -26,17 +33,28 @@ function LecturerDashboard() {
 
   return (
     <div className="lecturer-dashboard">
-
       {/* SIDEBAR */}
       <aside className="dashboard-sidebar">
         <h2>TechTendance</h2>
         <nav>
-          <Link to="create-course"><FaBook /> Create Course</Link>
-          <Link to="start-session"><FaPlayCircle /> Start Session</Link>
-          <Link to="attendance-list"><FaListAlt /> View Attendance</Link>
-          <Link to="reports"><FaChartBar /> Reports</Link>
-          <Link to="students"><FaUserGraduate /> Students</Link>
-          <Link to="settings"><FaCog /> Settings</Link>
+          <Link to="create-course">
+            <FaBook /> Create Course
+          </Link>
+          <Link to="start-session">
+            <FaPlayCircle /> Start Session
+          </Link>
+          <Link to="attendance-list">
+            <FaListAlt /> View Attendance
+          </Link>
+          <Link to="reports">
+            <FaChartBar /> Reports
+          </Link>
+          <Link to="students">
+            <FaUserGraduate /> Students
+          </Link>
+          <Link to="settings">
+            <FaCog /> Settings
+          </Link>
         </nav>
       </aside>
 
@@ -44,6 +62,11 @@ function LecturerDashboard() {
       <main className="dashboard-main">
         <header className="dashboard-header">
           <h1>Welcome, Lecturer</h1>
+          <header className="dashboard-header">
+            <h1>Welcome, Lecturer</h1>
+
+            <InstallButton />
+          </header>
         </header>
 
         {/* STATS CARDS */}
