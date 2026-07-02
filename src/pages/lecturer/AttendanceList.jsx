@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCourses, getLecturerAttendance } from "../../../services/api";
 import "../../styles/AttendanceList.css";
-
+import { exportCSV } from "../../../utils/exportAttendance";
 function AttendanceList({ token }) {
   const [courses, setCourses] = useState([]);
   const [sessions, setSessions] = useState([]);
@@ -33,7 +33,6 @@ function AttendanceList({ token }) {
         if (!allSessions.length) {
           setMessage("No attendance history found.");
         }
-
       } catch (err) {
         setError(err?.message || "Failed to fetch data.");
       } finally {
@@ -51,9 +50,7 @@ function AttendanceList({ token }) {
     if (!courseId) {
       setFilteredSessions(sessions);
     } else {
-      const filtered = sessions.filter(
-        (s) => s.course.id == courseId
-      );
+      const filtered = sessions.filter((s) => s.course.id == courseId);
       setFilteredSessions(filtered);
     }
   };
@@ -89,6 +86,7 @@ function AttendanceList({ token }) {
             <p className="student-count">
               Students Present: {session.attendees.length}
             </p>
+            <button onClick={() => exportCSV(session)}>Download File</button>
 
             {session.attendees.length > 0 ? (
               <table>
