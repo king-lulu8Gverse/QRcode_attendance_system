@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { registerUser } from "../../services/api";
 import {
   FaUser,
@@ -11,6 +11,7 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import "../styles/Register.css";
+import Webcam from "react-webcam";
 
 function Register() {
   const [form, setForm] = useState({
@@ -30,12 +31,24 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
   };
+  const webcamRef = React.useRef(null);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const captureFace = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
 
+    setCapturedImage(imageSrc);
+    setShowCamera(false);
+  };
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.password) {
       setError("Please fill in all required fields");
+      return;
+    }
+    if (form.role === "student" && !capturedImage) {
+      setError("Please capture your face before registering.");
       return;
     }
 
@@ -53,6 +66,8 @@ function Register() {
           department: "",
           faculty: "",
         });
+        setCapturedImage(null);
+        setShowCamera(false);
       } else {
         setError("Registration failed. Try again.");
       }
@@ -64,7 +79,6 @@ function Register() {
 
   return (
     <div className="register-page">
-
       {/* BACK BUTTON */}
       <button className="back-btn" onClick={() => window.history.back()}>
         ← Back
@@ -77,7 +91,6 @@ function Register() {
         {error && <p className="error">{error}</p>}
 
         <form onSubmit={handleRegister}>
-
           <div className="input-group">
             <FaUser className="input-icon" />
             <input
@@ -153,15 +166,72 @@ function Register() {
               </div>
             </>
           )}
+          {/* FACE ENROLLMENT */}
+          {form.role === "student" && (
+            <div className="face-section">
+              <h3>Face Enrollment</h3>
 
+              {!showCamera && !capturedImage && (
+                <button
+                  type="button"
+                  onClick={() => setShowCamera(true)}
+                  className="camera-btn"
+                >
+                  📷 Open Camera
+                </button>
+              )}
+
+              {showCamera && (
+                <>
+                  <Webcam
+                    ref={webcamRef}
+                    audio={false}
+                    screenshotFormat="image/jpeg"
+                    width={320}
+                    height={240}
+                    videoConstraints={{
+                      facingMode: "user",
+                    }}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={captureFace}
+                    className="camera-btn"
+                  >
+                    Capture Face
+                  </button>
+                </>
+              )}
+
+              {capturedImage && (
+                <>
+                  <img
+                    src={capturedImage}
+                    alt="Captured Face"
+                    className="face-preview"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCapturedImage(null);
+                      setShowCamera(true);
+                    }}
+                    className="camera-btn"
+                  >
+                    🔄 Retake
+                  </button>
+                </>
+              )}
+            </div>
+          )}
           <button type="submit">Register</button>
         </form>
 
         <p className="login-link">
           Already have an account?{" "}
-          <span onClick={() => (window.location.href = "/login")}>
-            Login
-          </span>
+          <span onClick={() => (window.location.href = "/login")}>Login</span>
         </p>
       </div>
     </div>

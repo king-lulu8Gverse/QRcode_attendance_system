@@ -1,8 +1,7 @@
 import Dexie from "dexie";
 
-export const db = new Dexie("TechTendance");
+export const db = new Dexie("TechTendanceDB");
 
 db.version(1).stores({
-    attendance:
-        "++id,studentId,sessionId,time,synced"
+  attendance: "++id,studentId,sessionToken,time,synced",
 });

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { pages } from "../data/views";
 import "../styles/NavBar.css";
-
+import installButton from "./InstallButton";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,7 +11,7 @@ function Navbar() {
       <div className="navbar-container">
         
         <div className="brand">TechTendance</div>
-
+        <installButton />
         
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
           {pages.map((page) => (

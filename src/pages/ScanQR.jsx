@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { markAttendance } from "../../services/api";
 import "../styles/ScanQR.css";
-
+// import { isOnline } from "../database/network";
+// import { saveOfflineAttendance } from "../database/offlineAttendance";
 function ScanQR() {
   const [message, setMessage] = useState("");
   const [scanned, setScanned] = useState(false);
@@ -12,7 +13,7 @@ function ScanQR() {
     const config = {
       fps: 10, // faster scanning
       qrbox: { width: 300, height: 300 },
-      
+
       experimentalFeatures: {
         useBarCodeDetectorIfSupported: true,
       },
@@ -29,13 +30,16 @@ function ScanQR() {
         const parts = result.split("/");
         const sessionToken = parts[parts.length - 1];
 
-        const res = await markAttendance(sessionToken, token);
-        setMessage(res.message || "✅ Attendance marked successfully!");
+        if (isOnline()) {
+          const res = await markAttendance(sessionToken, token);
+          setMessage(res.message || "✅ Attendance marked successfully!");
+        } else {
+          await saveOfflineAttendance(sessionToken);
+          setMessage("📴 No internet. Attendance saved offline.");
+        }
       } catch (err) {
         console.error(err);
         setMessage(err?.message || "⚠️ Failed to mark attendance");
-      } finally {
-        scanner.clear();
       }
     };
 
