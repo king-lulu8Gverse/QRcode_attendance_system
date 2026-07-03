@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { pages } from "../data/views";
 import "../styles/NavBar.css";
-import installButton from "./InstallButton";
+import InstallButton from "./InstallButton";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 

@@ -30,13 +30,15 @@ function ScanQR() {
         const parts = result.split("/");
         const sessionToken = parts[parts.length - 1];
 
-        if (isOnline()) {
-          const res = await markAttendance(sessionToken, token);
-          setMessage(res.message || "✅ Attendance marked successfully!");
-        } else {
-          await saveOfflineAttendance(sessionToken);
-          setMessage("📴 No internet. Attendance saved offline.");
-        }
+        const res = await markAttendance(sessionToken, token);
+        setMessage(res.message || "✅ Attendance marked successfully!");
+        // if (isOnline()) {
+        //   const res = await markAttendance(sessionToken, token);
+        //   setMessage(res.message || "✅ Attendance marked successfully!");
+        // } else {
+        //   await saveOfflineAttendance(sessionToken);
+        //   setMessage("📴 No internet. Attendance saved offline.");
+        // }
       } catch (err) {
         console.error(err);
         setMessage(err?.message || "⚠️ Failed to mark attendance");
