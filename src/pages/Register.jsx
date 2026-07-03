@@ -51,9 +51,28 @@ function Register() {
       setError("Please capture your face before registering.");
       return;
     }
-
+   
     try {
-      const res = await registerUser(form);
+       const formData = new FormData();
+
+    formData.append("name", form.name);
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+    formData.append("role", form.role);
+    formData.append("matric_number", form.matric_number);
+    formData.append("department", form.department);
+    formData.append("faculty", form.faculty);
+    if (capturedImage) {
+  const blob = await fetch(capturedImage).then((res) => res.blob());
+
+  formData.append(
+    "face",
+    new File([blob], "face.jpg", {
+      type: "image/jpeg",
+    })
+  );
+}
+      const res = await registerUser(formData);
 
       if (res.message || res.success) {
         alert("Registered Successfully!");
@@ -73,7 +92,7 @@ function Register() {
       }
     } catch (err) {
       console.error(err);
-      setError("Something went wrong.");
+      setError(err?.error || err?.message || "Something went wrong.");
     }
   };
 

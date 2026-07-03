@@ -17,10 +17,14 @@ API.interceptors.request.use((config) => {
 
   return config;
 });
-
-export const registerUser = async (data) => {
+export const registerUser = async (formData) => {
   try {
-    const res = await API.post("/auth/register", data);
+    const res = await API.post("/auth/register", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return res.data;
   } catch (err) {
     throw err.response?.data || err;
