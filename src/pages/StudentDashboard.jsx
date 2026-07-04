@@ -10,7 +10,7 @@ function StudentDashboard() {
         <h1>Student Dashboard</h1>
         <p>Quick access to your attendance and profile</p>
         <header className="dashboard-header">
-          <h1>Welcome, Lecturer</h1>
+        
 
           <InstallButton />
         </header>

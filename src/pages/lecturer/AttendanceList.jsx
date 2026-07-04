@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCourses, getLecturerAttendance } from "../../../services/api";
 import "../../styles/AttendanceList.css";
-import { exportCSV } from "../../../utils/exportAttendance";
+import { exportCSV } from "../../utils/exportAttendance";
 function AttendanceList({ token }) {
   const [courses, setCourses] = useState([]);
   const [sessions, setSessions] = useState([]);

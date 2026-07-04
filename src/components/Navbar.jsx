@@ -11,7 +11,7 @@ function Navbar() {
       <div className="navbar-container">
         
         <div className="brand">TechTendance</div>
-        <installButton />
+        <InstallButton />
         
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
           {pages.map((page) => (

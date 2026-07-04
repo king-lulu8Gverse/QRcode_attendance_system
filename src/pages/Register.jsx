@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { registerUser } from "../../services/api";
 import {
   FaUser,
@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import "../styles/Register.css";
 import Webcam from "react-webcam";
+import { loadFaceModels, getFaceDescriptor } from "../utils/faceRecongition";
 
 function Register() {
   const [form, setForm] = useState({
@@ -23,7 +24,9 @@ function Register() {
     department: "",
     faculty: "",
   });
-
+  useEffect(() => {
+    loadFaceModels();
+  }, []);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
@@ -31,14 +34,32 @@ function Register() {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
   };
+  const [faceDescriptor, setFaceDescriptor] = useState(null);
   const webcamRef = React.useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const [showCamera, setShowCamera] = useState(false);
-  const captureFace = () => {
+  const captureFace = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
 
     setCapturedImage(imageSrc);
-    setShowCamera(false);
+
+    const img = new Image();
+    img.src = imageSrc;
+
+    img.onload = async () => {
+      const descriptor = await getFaceDescriptor(img);
+
+      if (!descriptor) {
+        alert("No face detected. Please try again.");
+        return;
+      }
+
+      setFaceDescriptor(descriptor);
+
+      console.log("Descriptor:", descriptor);
+
+      setShowCamera(false);
+    };
   };
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -51,27 +72,34 @@ function Register() {
       setError("Please capture your face before registering.");
       return;
     }
-   
+
     try {
-       const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("name", form.name);
-    formData.append("email", form.email);
-    formData.append("password", form.password);
-    formData.append("role", form.role);
-    formData.append("matric_number", form.matric_number);
-    formData.append("department", form.department);
-    formData.append("faculty", form.faculty);
-    if (capturedImage) {
-  const blob = await fetch(capturedImage).then((res) => res.blob());
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("password", form.password);
+      formData.append("role", form.role);
+      formData.append("matric_number", form.matric_number);
+      formData.append("department", form.department);
+      formData.append("faculty", form.faculty);
+      if (capturedImage) {
+        const blob = await fetch(capturedImage).then((res) => res.blob());
 
-  formData.append(
-    "face",
-    new File([blob], "face.jpg", {
-      type: "image/jpeg",
-    })
-  );
-}
+        formData.append(
+          "face",
+          new File([blob], "face.jpg", {
+            type: "image/jpeg",
+          }),
+        );
+        console.log("Sending descriptor:", faceDescriptor);
+        console.log("Descriptor JSON:", JSON.stringify(faceDescriptor));
+
+        for (let pair of formData.entries()) {
+          console.log(pair[0], pair[1]);
+        }
+        formData.append("descriptor", JSON.stringify(faceDescriptor));
+      }
       const res = await registerUser(formData);
 
       if (res.message || res.success) {

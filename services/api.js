@@ -2,9 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "https://qrcode-server-backend.onrender.com/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+
 });
 
 /* ---------------- AUTH ---------------- */
@@ -140,3 +138,18 @@ export const getDashboardStats = async (token) => {
     throw err.response?.data || err;
   }
 };     
+
+
+export const verifyFace = async (descriptor, token) => {
+  const res = await API.post(
+    "/auth/verify-face",
+    { descriptor },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data;
+};
