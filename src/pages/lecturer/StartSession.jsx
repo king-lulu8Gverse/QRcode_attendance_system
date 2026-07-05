@@ -53,7 +53,12 @@ function StartSession() {
       setLoading(false);
     }
   };
-
+const downloadQR = () => {
+  const link = document.createElement("a");
+  link.href = sessionUUID;
+  link.download = "attendance_qrcode.png";
+  link.click();
+};
   return (
     <div className="session-page">
       <h2>Start Attendance</h2>
@@ -74,11 +79,18 @@ function StartSession() {
 
       {message && <p className="message">{message}</p>}
 
-      {sessionUUID && (
-        <div className="qr-container">
-          <img src={sessionUUID} alt="QR Code" />
-        </div>
-      )}
+     {sessionUUID && (
+  <div className="qr-container">
+    <img src={sessionUUID} alt="QR Code" />
+
+    <button
+      onClick={downloadQR}
+      className="download-btn"
+    >
+      Download QR Code
+    </button>
+  </div>
+)}
     </div>
   );
 }
